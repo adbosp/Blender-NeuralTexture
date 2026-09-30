@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "neural-texture": {
+      "command": "python",
+      "args": ["mcp_server/neural_texture_mcp.py"],
+      "env": {"NT_BLENDER": "blender"}
+    }
+  }
+}

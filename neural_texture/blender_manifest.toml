@@ -1,0 +1,18 @@
+schema_version = "1.0.0"
+
+id = "neural_texture"
+version = "0.2.0"
+name = "Neural Texture"
+tagline = "Structure-preserving AI appearance for existing meshes"
+maintainer = "Glor Games <support@glorgames.com>"
+type = "add-on"
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+tags = ["Material", "Render"]
+
+[permissions]
+network = "Send guidance images to a ComfyUI server"
+files = "Read reference images, write guidance passes and textures"
+
+[build]
+paths_exclude_pattern = ["__pycache__/", "/.git/", "*.zip", "tests/"]

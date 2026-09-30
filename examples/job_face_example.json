@@ -1,0 +1,111 @@
+{
+  "object_name": "Head",
+  "output_dir": "//neural_texture_out",
+  "prompt": "Make the character resemble this face.\nKeep the existing head proportions.\nKeep the original large-scale facial normal.\nMake the skin slightly smoother.\nAdd subtle lip and nose details.\nGenerate high-frequency skin detail only.\nDo not change the silhouette.",
+  "intent": {
+    "preserve_silhouette": true,
+    "preserve_proportions": true,
+    "preserve_macro_normal": true,
+    "preserve_uvs": true,
+    "generate_micro": true,
+    "generate_meso": true,
+    "detail_strength": 0.51,
+    "meso_strength": 0.175,
+    "roughness_offset": -0.04,
+    "metallic_hint": false,
+    "reference_role": "identity",
+    "identity_strength": 0.8,
+    "appearance_prompt": "realistic human skin, natural pores, subtle subsurface tones, Make the character resemble this face. Make the skin slightly smoother. Add subtle lip and nose details. Generate high-frequency skin detail only.",
+    "negative_prompt": "plastic, wax, makeup shine, shadows, cast shadows, directional lighting, specular highlights, reflections, rim light, vignette, background, text, watermark",
+    "target_maps": [
+      "basecolor",
+      "detail_normal",
+      "normal",
+      "roughness"
+    ],
+    "material_class": "skin",
+    "material_classes": {},
+    "mode": "enhance",
+    "language": "en",
+    "geometry_warnings": [],
+    "notes": [
+      "Generated normal detail restricted to the high-frequency band.",
+      "Explicitly named features (e.g. lips/nose) kept as subtle meso detail despite the high-frequency-only request."
+    ]
+  },
+  "reference_images": [
+    "//refs/face_front.jpg"
+  ],
+  "views": [
+    "front",
+    "back",
+    "left",
+    "right",
+    "top",
+    "bottom",
+    "front_left",
+    "front_right"
+  ],
+  "candidate_views": [
+    "back_left",
+    "back_right",
+    "top_front",
+    "top_back",
+    "top_left",
+    "top_right",
+    "bottom_front",
+    "bottom_back",
+    "bottom_left",
+    "bottom_right"
+  ],
+  "use_planner": true,
+  "synth": {},
+  "preset": "skin_detail",
+  "intent_overrides": {
+    "material_class": "skin",
+    "detail_strength": 0.45,
+    "generate_meso": true,
+    "meso_strength": 0.2
+  },
+  "view_resolution": 1024,
+  "texture_resolution": 4096,
+  "orthographic": true,
+  "uv_map": "",
+  "ao_samples": 32,
+  "use_gpu": false,
+  "keep_temp_scene": false,
+  "projection": {},
+  "pbr": {
+    "preserve_existing_color": 0.85
+  },
+  "model": {
+    "server_url": "http://127.0.0.1:8188",
+    "checkpoint": "sd_xl_base_1.0.safetensors",
+    "controlnet": "controlnet-union-sdxl-1.0.safetensors",
+    "controlnet_is_union": true,
+    "controlnet_normal": "",
+    "depth_strength": 0.75,
+    "normal_strength": 0.55,
+    "control_end": 0.85,
+    "use_ipadapter": true,
+    "ipadapter_preset": "PLUS (high strength)",
+    "ipadapter_face_preset": "PLUS FACE (portraits)",
+    "ipadapter_weight": 0.7,
+    "steps": 28,
+    "cfg": 5.5,
+    "sampler": "dpmpp_2m",
+    "scheduler": "karras",
+    "denoise": 0.35,
+    "seed": 12345,
+    "timeout_s": 600.0,
+    "custom_workflow": "",
+    "consistency_denoise": 0.6,
+    "normal_estimator": "auto",
+    "normal_estimator_resolution": 1024,
+    "auto_detect_models": true,
+    "max_retries": 2,
+    "min_resolution": 640
+  },
+  "create_material": true,
+  "assign_material": false
+}

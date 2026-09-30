@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Neural Texture Intent",
+  "description": "Structured editing intent passed as job.intent. Unknown keys are ignored.",
+  "type": "object",
+  "properties": {
+    "preserve_silhouette": {"type": "boolean", "default": true},
+    "preserve_proportions": {"type": "boolean", "default": true},
+    "preserve_macro_normal": {"type": "boolean", "default": true, "description": "Final normal = RNM(existing normal, generated detail)"},
+    "preserve_uvs": {"type": "boolean", "default": true},
+    "generate_micro": {"type": "boolean", "default": true, "description": "pores, grain, fibres, fine scratches"},
+    "generate_meso": {"type": "boolean", "default": false, "description": "wrinkles, cracks, seams, lip/eyelid definition"},
+    "meso_strength": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.35},
+    "detail_strength": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.6},
+    "roughness_offset": {"type": "number", "minimum": -0.5, "maximum": 0.5, "default": 0.0},
+    "metallic_hint": {"type": "boolean", "default": false},
+    "reference_role": {"enum": ["appearance", "identity", "material"], "default": "appearance"},
+    "identity_strength": {"type": "number", "minimum": 0, "maximum": 1},
+    "appearance_prompt": {"type": "string", "description": "English prompt for the image model (no lighting words)"},
+    "negative_prompt": {"type": "string"},
+    "material_class": {"enum": ["", "skin", "stone", "metal", "rusted_metal", "painted_metal", "wood", "fabric",
+                                "leather", "plastic", "ceramic", "organic", "generic"]},
+    "material_classes": {"type": "object", "additionalProperties": {"type": "string"},
+                         "description": "slot index (as string) or material name -> class"},
+    "mode": {"enum": ["enhance", "restyle"], "default": "enhance"},
+    "language": {"type": "string"},
+    "target_maps": {"type": "array", "items": {"type": "string"}},
+    "geometry_warnings": {"type": "array", "description": "Non-empty => generation is refused",
+                          "items": {"type": "object", "properties": {"clause": {"type": "string"},
+                                    "kind": {"type": "string"}, "message": {"type": "string"}}}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}

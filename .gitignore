@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.cache/
+.npm/
+.npm-global/
+.config/
+.ssh/
+.claude/
+.gitconfig
+.wget-hsts
+dist/

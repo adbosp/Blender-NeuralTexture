@@ -1,0 +1,222 @@
+{
+ "1": {
+  "class_type": "CheckpointLoaderSimple",
+  "inputs": {
+   "ckpt_name": "sd_xl_base_1.0.safetensors"
+  }
+ },
+ "2": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "{{reference_image}}"
+  }
+ },
+ "3": {
+  "class_type": "IPAdapterUnifiedLoader",
+  "inputs": {
+   "model": [
+    "1",
+    0
+   ],
+   "preset": "PLUS FACE (portraits)"
+  }
+ },
+ "4": {
+  "class_type": "IPAdapterAdvanced",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "ipadapter": [
+    "3",
+    1
+   ],
+   "image": [
+    "2",
+    0
+   ],
+   "weight": 0.7,
+   "weight_type": "linear",
+   "combine_embeds": "concat",
+   "start_at": 0.0,
+   "end_at": 1.0,
+   "embeds_scaling": "V only"
+  }
+ },
+ "5": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "{{positive}}",
+   "clip": [
+    "1",
+    1
+   ]
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": "{{negative}}",
+   "clip": [
+    "1",
+    1
+   ]
+  }
+ },
+ "7": {
+  "class_type": "ControlNetLoader",
+  "inputs": {
+   "control_net_name": "controlnet-union-sdxl-1.0.safetensors"
+  }
+ },
+ "8": {
+  "class_type": "SetUnionControlNetType",
+  "inputs": {
+   "control_net": [
+    "7",
+    0
+   ],
+   "type": "depth"
+  }
+ },
+ "9": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "{{depth_image}}"
+  }
+ },
+ "10": {
+  "class_type": "ControlNetApplyAdvanced",
+  "inputs": {
+   "positive": [
+    "5",
+    0
+   ],
+   "negative": [
+    "6",
+    0
+   ],
+   "control_net": [
+    "8",
+    0
+   ],
+   "image": [
+    "9",
+    0
+   ],
+   "strength": 0.75,
+   "start_percent": 0.0,
+   "end_percent": 0.85
+  }
+ },
+ "11": {
+  "class_type": "SetUnionControlNetType",
+  "inputs": {
+   "control_net": [
+    "7",
+    0
+   ],
+   "type": "normal"
+  }
+ },
+ "12": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "{{normal_image}}"
+  }
+ },
+ "13": {
+  "class_type": "ControlNetApplyAdvanced",
+  "inputs": {
+   "positive": [
+    "10",
+    0
+   ],
+   "negative": [
+    "10",
+    1
+   ],
+   "control_net": [
+    "11",
+    0
+   ],
+   "image": [
+    "12",
+    0
+   ],
+   "strength": 0.55,
+   "start_percent": 0.0,
+   "end_percent": 0.85
+  }
+ },
+ "14": {
+  "class_type": "LoadImage",
+  "inputs": {
+   "image": "{{albedo_image}}"
+  }
+ },
+ "15": {
+  "class_type": "VAEEncode",
+  "inputs": {
+   "pixels": [
+    "14",
+    0
+   ],
+   "vae": [
+    "1",
+    2
+   ]
+  }
+ },
+ "16": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "seed": "{{seed}}",
+   "steps": "{{steps}}",
+   "cfg": "{{cfg}}",
+   "sampler_name": "dpmpp_2m",
+   "scheduler": "karras",
+   "positive": [
+    "13",
+    0
+   ],
+   "negative": [
+    "13",
+    1
+   ],
+   "latent_image": [
+    "15",
+    0
+   ],
+   "denoise": "{{denoise}}"
+  }
+ },
+ "17": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "16",
+    0
+   ],
+   "vae": [
+    "1",
+    2
+   ]
+  }
+ },
+ "18": {
+  "class_type": "SaveImage",
+  "inputs": {
+   "images": [
+    "17",
+    0
+   ],
+   "filename_prefix": "{{filename_prefix}}"
+  }
+ }
+}
